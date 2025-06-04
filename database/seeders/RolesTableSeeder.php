@@ -19,7 +19,6 @@ class RolesTableSeeder extends Seeder
         $staffRole = Role::firstOrCreate(['name' => 'staff']); 
         $guestRole = Role::firstOrCreate(['name' => 'guest']);
 
-        // Assign admin role to user with ID 1
         $adminUser = User::find(1);
 
         if ($adminUser && !$adminUser->roles->contains($adminRole->id)) {

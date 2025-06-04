@@ -20,7 +20,6 @@ class RoleMiddleware
     {
         $user = $request->user();
 
-        // Check if user is authenticated and has the required role
         if (!$user || !$user->hasRole($role)) {
             abort(403, 'Unauthorized access.');
         }

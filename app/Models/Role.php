@@ -9,10 +9,8 @@ class Role extends Model
 {
     use HasFactory;
 
-    // Optional: Define the table name explicitly if it's not standard
     protected $table = 'roles';
 
-    // Mass assignable attributes
     protected $fillable = ['name'];
 
     /**
