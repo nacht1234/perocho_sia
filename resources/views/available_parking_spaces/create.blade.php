@@ -34,7 +34,7 @@
                     </div>
                     <div class="flex justify-center space-x-2 mt-6">
                         <button type="submit"
-                            class="px-4 py-2 bg-green-500 text-black font-semibold rounded hover:bg-green-700">Update</button>
+                            class="px-4 py-2 bg-green-500 text-black font-semibold rounded hover:bg-green-700">Save</button>
                         <a href="{{ route('available-parking-spaces.index') }}"
                             class="ml-3 text-black bg-red-500 hover:bg-red-700 font-semibold rounded px-4 py-2">Cancel</a>
                     </div>

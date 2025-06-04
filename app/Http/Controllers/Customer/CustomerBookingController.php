@@ -74,19 +74,21 @@ class CustomerBookingController extends Controller
 
     public function destroy(Booking $booking)
     {
-        $userCustomerId = Auth::user()->customer->id;
-
-        if ($booking->customer_id !== $userCustomerId) {
+        if ($booking->customer_id !== Auth::user()->customer->id) {
             abort(403);
         }
 
-        AvailableParkingSpace::where('id', $booking->available_parking_space_id)
-            ->update(['status' => 'available']);
+        if ($booking->is_confirmed) {
+            $booking->space->update(['status' => 'available']);
+        }
 
         $booking->delete();
 
-        return back()->with('success', 'Booking cancelled.');
+        $message = $booking->is_confirmed ? 'You have successfully unoccupied the parking space.' : 'Booking cancelled.';
+
+        return back()->with('success', $message);
     }
+
 
     public function downloadPDF()
     {

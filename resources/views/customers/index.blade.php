@@ -5,12 +5,13 @@
 
     <div class="p-6">
         @if(session('success'))
-            <div class="mb-4 text-green-600">{{ session('success') }}</div>
+            <div class="bg-green-100 text-green-800 p-2 rounded mb-4">{{ session('success') }}</div>
         @endif
         @if(session('error'))
-            <div class="mb-4 text-red-600">{{ session('error') }}</div>
+            <div class="bg-red-100 text-red-800 p-2 rounded mb-4">{{ session('error') }}</div>
         @endif
 
+        <div class="hidden sm:block bg-white shadow rounded-lg p-4">
         @if($customers->isEmpty())
             <p class="flex items-center justify-center">No customers signed up yet.</p>
         @else
@@ -19,7 +20,6 @@
             <button type="submit" class="bg-gray-600 hover:bg-gray-800 rounded ml-3 px-4 py-2 text-white">Search</button>
         </form>
 
-        <div class="hidden sm:block bg-white shadow rounded-lg p-4">
             <table class="min-w-full text-sm text-left">
                 <thead class="bg-gray-200 text-gray-700">
                     <tr>

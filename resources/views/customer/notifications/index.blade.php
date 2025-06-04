@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="py-6">
-        <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+        <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow flex items-center justify-center">
             @if ($notifications->isEmpty())
                 <p>No new notifications.</p>
             @else

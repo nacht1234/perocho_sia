@@ -15,13 +15,20 @@
                 {{ session('success') }}
             </div>
         @endif
+        @if(session('error'))
+            <div class="bg-red-100 text-red-800 p-2 rounded mb-4">{{ session('error') }}</div>
+        @endif
+
+        <div class="hidden sm:block bg-white shadow rounded-lg p-4">
+        @if($spaces->isEmpty())
+            <p class="flex items-center justify-center">No available parking spaces.</p>
+        @else
 
         <form method="GET" action="{{ route('available-parking-spaces.index') }}" class="mb-4">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search parking spaces..." class="form-input text-gray-800">
             <button type="submit" class="bg-gray-600 hover:bg-gray-800 rounded ml-3 px-4 py-2 text-white">Search</button>
         </form>
 
-        <div class="hidden sm:block bg-white shadow rounded-lg p-4">
             <table class="min-w-full text-sm text-left">
                 <thead class="bg-gray-200 text-gray-700">
                     <tr>
@@ -54,5 +61,6 @@
             {{ $spaces->links() }}
         </div>
         <a href="{{ route('available_parking_spaces.pdf') }}" class="text-white bg-green-500 hover:bg-green-600 rounded px-2 py-2 flex items-center justify-center mt-5">Download PDF</a>
+        @endif
     </div>
 </x-app-layout>

@@ -6,16 +6,6 @@
     </x-slot>
 
     <div class="py-6">
-        @if(session('success'))
-            <div class="mb-4 text-green-600">{{ session('success') }}</div>
-        @endif
-        @if(session('error'))
-            <div class="mb-4 text-red-600">{{ session('error') }}</div>
-        @endif
-
-        @if($space->isEmpty())
-            <p class="flex items-center justify-center">No available parking spaces.</p>
-        @else
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white p-6 rounded shadow">
                 <form method="POST" action="{{ route('available-parking-spaces.update', $available_parking_space) }}">
@@ -53,6 +43,5 @@
                 </form>
             </div>
         </div>
-        @endif
     </div>
 </x-app-layout>
