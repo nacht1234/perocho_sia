@@ -38,6 +38,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:user'])->prefix('customer')->name('customer.')->group(function () {
     Route::resource('bookings', CustomerBookingController::class)->only(['index', 'create', 'store', 'destroy']);
     Route::get('/bookings/pdf', [CustomerBookingController::class, 'downloadPDF'])->name('bookings.pdf');
+    Route::get('/notifications', [CustomerBookingController::class, 'notifications'])->name('notifications');
 });
 
 Route::middleware(['auth', 'role:staff'])->group(function () {

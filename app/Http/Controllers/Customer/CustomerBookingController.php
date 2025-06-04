@@ -94,4 +94,22 @@ class CustomerBookingController extends Controller
         $pdf = Pdf::loadView('customer.bookings.pdf', compact('bookings'));
         return $pdf->download('my_bookings.pdf');
     }
+
+    public function notifications()
+    {
+        $customer = Auth::user()->customer;
+
+        $notifications = Booking::where('customer_id', $customer->id)
+            ->where('is_confirmed', true)
+            ->where('is_read', false)
+            ->with('space')
+            ->get();
+
+        foreach ($notifications as $note) {
+            $note->is_read = true;
+            $note->save();
+        }
+
+        return view('customer.notifications.index', compact('notifications'));
+    }
 }

@@ -33,6 +33,7 @@ class StaffBookingController extends Controller
 
         $booking->is_confirmed = true;
         $booking->confirmed_by = Auth::id();
+        $booking->is_read = false;
         $booking->save();
 
         $space = $booking->space;

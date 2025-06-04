@@ -41,6 +41,22 @@
                     <x-nav-link :href="route('customer.bookings.index')" :active="request()->routeIs('customer.bookings.index')">
                         {{ __('My Bookings') }}
                     </x-nav-link>
+
+                    @php
+                        $unreadCount = \App\Models\Booking::where('customer_id', Auth::user()->customer->id ?? 0)
+                            ->where('is_confirmed', true)
+                            ->where('is_read', false)
+                            ->count();
+                    @endphp
+
+                    <x-nav-link :href="route('customer.notifications')" :active="request()->routeIs('customer.notifications')">
+                         {{ __('Notifications') }}
+                        @if ($unreadCount > 0)
+                            <span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-bold leading-none bg-red-600 text-white">
+                                {{ $unreadCount }}
+                            </span>
+                        @endif
+                    </x-nav-link>
                     @endrole
 
                     @role('staff')
