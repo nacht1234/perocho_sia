@@ -39,6 +39,7 @@ Route::middleware(['auth', 'role:user'])->prefix('customer')->name('customer.')-
     Route::resource('bookings', CustomerBookingController::class)->only(['index', 'create', 'store', 'destroy']);
     Route::get('/bookings/pdf', [CustomerBookingController::class, 'downloadPDF'])->name('bookings.pdf');
     Route::get('/notifications', [CustomerBookingController::class, 'notifications'])->name('notifications');
+    Route::patch('/customer/bookings/{booking}/unoccupy', [CustomerBookingController::class, 'unoccupy'])->name('customer.bookings.unoccupy');
 });
 
 Route::middleware(['auth', 'role:staff'])->group(function () {

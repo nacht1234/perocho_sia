@@ -17,6 +17,7 @@ class CustomerBookingController extends Controller
 
         $bookings = Booking::with('space')
             ->where('customer_id', Auth::user()->customer->id)
+            ->where('status', '!=', 'unoccupied')
             ->when($search, function ($query, $search) {
                 $query->where(function($q) use ($search) {
                     $q->where('car_brand', 'like', "%{$search}%")
@@ -79,16 +80,17 @@ class CustomerBookingController extends Controller
         }
 
         if ($booking->is_confirmed) {
+            $booking->status = 'unoccupied';
             $booking->space->update(['status' => 'available']);
+        } else {
+            $booking->status = 'cancelled';
         }
 
-        $booking->delete();
+        $booking->save();
 
-        $message = $booking->is_confirmed ? 'You have successfully unoccupied the parking space.' : 'Booking cancelled.';
-
+        $message = $booking->is_confirmed ? 'Parking space unoccupied.' : 'Booking cancelled.';
         return back()->with('success', $message);
     }
-
 
     public function downloadPDF()
     {
@@ -113,5 +115,20 @@ class CustomerBookingController extends Controller
         }
 
         return view('customer.notifications.index', compact('notifications'));
+    }
+
+    public function unoccupy(Booking $booking)
+    {
+        if ($booking->customer_id !== Auth::user()->customer->id || !$booking->is_confirmed) {
+            abort(403);
+        }
+
+        $booking->status = 'unoccupied';
+        $booking->save();
+
+        $booking->space->status = 'available';
+        $booking->space->save();
+
+        return redirect()->route('customer.bookings.index')->with('success', 'Booking unoccupied.');
     }
 }

@@ -14,6 +14,7 @@ class Booking extends Model
         'license_plate',
         'is_confirmed',
         'confirmed_by',
+        'status',
     ];
     
     public function customer()
@@ -29,6 +30,16 @@ class Booking extends Model
     public function confirmedBy()
     {
         return $this->belongsTo(User::class, 'confirmed_by');
+    }
+
+    public function getRowColor()
+    {
+        return match ($this->status) {
+            'active' => 'bg-green-50',
+            'cancelled' => 'bg-red-50',
+            'unoccupied' => 'bg-yellow-50',
+            default => 'bg-white',
+        };
     }
 }
 

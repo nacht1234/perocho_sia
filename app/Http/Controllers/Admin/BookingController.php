@@ -16,15 +16,18 @@ class BookingController extends Controller
         $search = $request->input('search');
 
         $bookings = Booking::with(['customer', 'space', 'confirmedBy'])
-            ->where('is_confirmed', true)
+            ->where(function ($query) {
+                $query->where('is_confirmed', true)
+                    ->orWhere('status', 'unoccupied');
+            })
             ->when($search, function ($query, $search) {
                 $query->whereHas('customer', function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%");
                 })
                 ->orWhereHas('space', function ($q) use ($search) {
                     $q->where('bldg_floor_no', 'like', "%{$search}%")
-                    ->orWhere('lot_no', 'like', "%{$search}%")
-                    ->orWhere('status', 'like', "%{$search}%");                       
+                        ->orWhere('lot_no', 'like', "%{$search}%")
+                        ->orWhere('status', 'like', "%{$search}%");
                 })
                 ->orWhere('car_brand', 'like', "%{$search}%")
                 ->orWhere('car_model', 'like', "%{$search}%")

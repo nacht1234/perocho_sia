@@ -39,7 +39,7 @@
                 </thead>
                 <tbody>
                     @foreach ($bookings as $booking)
-                        <tr class="border-t">
+                        <tr class="{{ $booking->getRowColor() }} border-t">
                             <td class="px-4 py-2">{{ $booking->customer->name }}</td>
                             <td class="px-4 py-2">{{ $booking->car_brand }} {{ $booking->car_model }}</td>
                             <td class="px-4 py-2">{{ $booking->license_plate }}</td>
